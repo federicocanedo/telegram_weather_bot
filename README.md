@@ -17,4 +17,4 @@ docker run -it \
 $(docker build . -q)
 ```
 
-The counter will be reset every time the cointainer is run, however you could create a volume and the and the counter.json will be saved.
+The counter will be reset every time the cointainer is run, however you could create a volume to save the counter.json file in the project root.
