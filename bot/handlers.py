@@ -2,6 +2,7 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext
 from weather.api import get_weather
 from bot.counter import increment_counter, get_counter
+from ai.validator import correct_city_name
 
 
 async def start(update, context):
@@ -28,9 +29,13 @@ async def menu_button(update, context):
 async def handle_message(update, context):
     if ('awaiting_city' in context.user_data) and (context.user_data['awaiting_city']):
         city = update.message.text
-        weather_info = get_weather(city)
-        await update.message.reply_text(weather_info)
-        context.user_data['awaiting_city'] = False
-        increment_counter()
+        try:
+            corrected_city = correct_city_name(city)
+            weather_info = get_weather(corrected_city)
+            await update.message.reply_text(weather_info)
+            context.user_data['awaiting_city'] = False
+            increment_counter()
+        except Exception as e:
+            print(e)
     else:
         await update.message
