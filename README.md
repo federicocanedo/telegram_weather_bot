@@ -1,6 +1,5 @@
 # Simple telegram weather bot
 
-Created for Hikko's technical test
 
 ### Running the bot
 
